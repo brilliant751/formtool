@@ -1,94 +1,72 @@
 <view class="container">
     <view class="form-title">表单填写工具</view>
     <view class="form-section">
-        <!-- 姓名输入 -->
+        <!-- 船号 -->
         <view class="form-item">
             <view class="form-label">
                 <text class="required">*</text>
-                <text>姓名</text>
+                <text>船号</text>
             </view>
-            <input class="form-input" placeholder="请输入姓名" />
+            <input class="form-input" placeholder="请输入船号" value="{{formData.number}}" bindinput="onInputChange" data-field="number"/>
+            <view class="error-text" wx:if="{{errors.number}}">{{errors.number}}</view>
         </view>
-        <!-- 手机号输入 -->
+        <!-- 时间 -->
         <view class="form-item">
             <view class="form-label">
                 <text class="required">*</text>
-                <text>手机号</text>
+                <text>时间</text>
             </view>
-            <input class="form-input" type="number" placeholder="请输入手机号" maxlength="11" />
-        </view>
-        <!-- 邮箱输入 -->
-        <view class="form-item">
-            <view class="form-label">
-                <text>邮箱</text>
-            </view>
-            <input class="form-input" placeholder="请输入邮箱地址" />
-        </view>
-        <!-- 性别选择 -->
-        <view class="form-item">
-            <view class="form-label">
-                <text class="required">*</text>
-                <text>性别</text>
-            </view>
-            <view class="radio-group">
-                <label class="radio-item">
-                    <radio value="male" checked />
-                    <text>男</text>
-                </label>
-                <label class="radio-item">
-                    <radio value="female" />
-                    <text>女</text>
-                </label>
-            </view>
-        </view>
-        <!-- 出生日期 -->
-        <view class="form-item">
-            <view class="form-label">
-                <text>出生日期</text>
-            </view>
-            <picker mode="date" class="form-picker">
-                <view class="picker-text">请选择日期</view>
+            <picker mode="time" class="form-picker" bindchange="onTimeChange" data-field="time">
+                <view class="picker-text">{{formData.time || '请选择时间'}}</view>
             </picker>
+            <view class="error-text" wx:if="{{errors.time}}">{{errors.time}}</view>
         </view>
-        <!-- 所在城市 -->
+        <!-- 地点 -->
         <view class="form-item">
             <view class="form-label">
-                <text>所在城市</text>
+                <text class="required">*</text>
+                <text>地点</text>
             </view>
-            <picker mode="region" class="form-picker">
-                <view class="picker-text">请选择城市</view>
+            <picker class="form-picker" range="{{locationList}}" bindchange="onLocationChange" data-field="location">
+                <view class="picker-text">{{formData.location || '请选择地点'}}</view>
             </picker>
+            <view class="error-text" wx:if="{{errors.location}}">{{errors.location}}</view>
         </view>
-        <!-- 兴趣爱好 -->
+        <!-- 类型 -->
         <view class="form-item">
             <view class="form-label">
-                <text>兴趣爱好</text>
+                <text class="required">*</text>
+                <text>类型</text>
             </view>
-            <view class="checkbox-group">
-                <label class="checkbox-item">
-                    <checkbox value="reading" />
-                    <text>阅读</text>
-                </label>
-                <label class="checkbox-item">
-                    <checkbox value="sports" />
-                    <text>运动</text>
-                </label>
-                <label class="checkbox-item">
-                    <checkbox value="music" />
-                    <text>音乐</text>
-                </label>
-                <label class="checkbox-item">
-                    <checkbox value="travel" />
-                    <text>旅行</text>
-                </label>
-            </view>
+            <picker class="form-picker" range="{{typeList}}" bindchange="onTypeChange" data-field="type">
+                <view class="picker-text">{{formData.type || '请选择类型'}}</view>
+            </picker>
+            <view class="error-text" wx:if="{{errors.type}}">{{errors.type}}</view>
         </view>
-        <!-- 个人简介 -->
+        <!-- 管件号 -->
         <view class="form-item">
             <view class="form-label">
-                <text>个人简介</text>
+                <text class="required">*</text>
+                <text>管件号</text>
             </view>
-            <textarea class="form-textarea" placeholder="请输入个人简介（选填）" maxlength="200" />
+            <input class="form-input" placeholder="请输入管件号" value="{{formData.pipeNumber}}" bindinput="onInputChange" data-field="pipeNumber"/>
+            <view class="error-text" wx:if="{{errors.pipeNumber}}">{{errors.pipeNumber}}</view>
+        </view>
+        <!-- 图片 -->
+        <view class="form-item">
+            <view class="form-label">
+                <text>图片</text>
+            </view>
+            <view class="image-upload-container">
+                <view class="image-preview" wx:if="{{formData.img}}">
+                    <image src="{{formData.img}}" mode="aspectFill" class="preview-image"></image>
+                    <button class="delete-icon" bind:tap="onDeleteImage">×</button>
+                </view>
+                <button class="upload-btn" wx:if="{{!formData.img}}" bind:tap="onUploadImage">
+                    <text class="upload-icon">📷</text>
+                    <text class="upload-text">上传图片</text>
+                </button>
+            </view>
         </view>
         <!-- 按钮组 -->
         <view class="button-group">
